@@ -38,8 +38,8 @@ class ClassDetailNew extends StatelessWidget {
           Text(
             text1,
             style: GoogleFonts.outfit(
-              fontSize: 32,
-              fontWeight: FontWeight.w500,
+              fontSize: 28,
+              fontWeight: FontWeight.w600,
               color: const Color.fromARGB(255, 42, 1, 154),
             ),
           ),
@@ -48,7 +48,7 @@ class ClassDetailNew extends StatelessWidget {
             text2,
             style: GoogleFonts.outfit(
               fontSize: 28,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
           ),
@@ -56,8 +56,8 @@ class ClassDetailNew extends StatelessWidget {
           Text(
             text3,
             style: GoogleFonts.outfit(
-              fontWeight: FontWeight.w500,
-              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
               color: Colors.black,
               height: 1.5, // Line height for readability
             ),
@@ -67,7 +67,7 @@ class ClassDetailNew extends StatelessWidget {
             text4,
             style: GoogleFonts.outfit(
               fontWeight: FontWeight.w400,
-              fontSize: 24,
+              fontSize: 20,
               color: Colors.black,
               height: 1.5, // Line height for readability
             ),
@@ -77,7 +77,7 @@ class ClassDetailNew extends StatelessWidget {
             text5,
             style: GoogleFonts.outfit(
               fontWeight: FontWeight.w500,
-              fontSize: 24,
+              fontSize: 20,
               color: Colors.black,
               height: 1.5, // Line height for readability
             ),

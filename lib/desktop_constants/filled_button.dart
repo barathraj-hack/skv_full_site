@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyFilledButton extends StatelessWidget {
+class MyFilledButton extends StatefulWidget {
   final String text;
   final void Function()? onTap;
 
@@ -12,24 +12,38 @@ class MyFilledButton extends StatelessWidget {
   });
 
   @override
+  _MyFilledButtonState createState() => _MyFilledButtonState();
+}
+
+class _MyFilledButtonState extends State<MyFilledButton> {
+  bool isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-            vertical: 12, horizontal: 25), // Simplified padding
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 42, 1, 154),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          text,
-          style: GoogleFonts.outfit(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: Colors.white,
+    return MouseRegion(
+      onEnter: (_) => setState(() => isHovered = true),
+      onExit: (_) => setState(() => isHovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          curve: Curves.bounceIn,
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+          decoration: BoxDecoration(
+            color: isHovered
+                ? Colors.black
+                : const Color.fromARGB(255, 42, 1, 154),
+            borderRadius: BorderRadius.circular(10),
           ),
-          textAlign: TextAlign.center, // Centers the text
+          child: Text(
+            widget.text,
+            style: GoogleFonts.outfit(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

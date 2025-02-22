@@ -25,7 +25,7 @@ class ClassDetail extends StatelessWidget {
               Text(
                 "Courses:",
                 style: GoogleFonts.outfit(
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -33,7 +33,7 @@ class ClassDetail extends StatelessWidget {
               Text(
                 "Pre-Mont -",
                 style: GoogleFonts.outfit(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -41,7 +41,7 @@ class ClassDetail extends StatelessWidget {
               Text(
                 "Mont-1 -",
                 style: GoogleFonts.outfit(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -49,7 +49,7 @@ class ClassDetail extends StatelessWidget {
               Text(
                 "Mont-2 -",
                 style: GoogleFonts.outfit(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -62,7 +62,7 @@ class ClassDetail extends StatelessWidget {
               Text(
                 "Age:",
                 style: GoogleFonts.outfit(
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -70,7 +70,7 @@ class ClassDetail extends StatelessWidget {
               Text(
                 "2.5 yrs",
                 style: GoogleFonts.outfit(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -78,7 +78,7 @@ class ClassDetail extends StatelessWidget {
               Text(
                 "3.5 yrs",
                 style: GoogleFonts.outfit(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -86,7 +86,7 @@ class ClassDetail extends StatelessWidget {
               Text(
                 "4.5 yrs",
                 style: GoogleFonts.outfit(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
               ),

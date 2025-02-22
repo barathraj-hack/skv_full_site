@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skv_website/desktop_constants/bottom_widget/desktop_bottom_widget.dart';
 import 'package:skv_website/desktop_constants/contact_constant/social_media.dart';
 import 'package:skv_website/desktop_constants/filled_button.dart';
 import 'package:skv_website/desktop_constants/my_card.dart';
@@ -14,6 +15,8 @@ import 'package:skv_website/mobile_constants/my_card.dart';
 import 'package:skv_website/mobile_constants/outline_button.dart';
 import 'package:skv_website/mobile_constants/social_media.dart';
 import 'package:skv_website/responsive/responsive_layout.dart';
+import 'package:skv_website/tablet_constants/tablet_bottom_widget.dart';
+import 'package:skv_website/tablet_constants/tablet_social_media.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -57,262 +60,282 @@ class _HomePageState extends State<HomePage> {
   // Mobile layout
   Widget _buildMobileLayout() {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "SKV INTERNATIONAL",
-                              style: GoogleFonts.outfit(
-                                fontSize: 32,
-                                fontWeight: FontWeight.w600,
-                                color: const Color.fromARGB(255, 42, 1, 154),
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "SCHOOL",
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w600,
-                                    color:
-                                        const Color.fromARGB(255, 42, 1, 154),
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  "(CBSE)",
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 4),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 42, 1, 154),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                "800+",
+      body: ScrollConfiguration(
+        behavior: const ScrollBehavior().copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "SKV INTERNATIONAL",
                                 style: GoogleFonts.outfit(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color.fromARGB(255, 42, 1, 154),
                                   letterSpacing: 0.5,
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              "Students Running",
-                              style: GoogleFonts.outfit(
-                                fontSize: 26,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                                letterSpacing: 0.5,
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "SCHOOL",
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w600,
+                                      color:
+                                          const Color.fromARGB(255, 42, 1, 154),
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    "(CBSE)",
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          "Successfully",
-                          style: GoogleFonts.outfit(
-                            fontSize: 26,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            letterSpacing: 0.5,
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    const Row(
-                      children: [
-                        MyFilledMobileButton(),
-                        SizedBox(width: 10),
-                        MyOutlineMobileButton(),
-                      ],
-                    ),
-                    const SizedBox(height: 32),
-                    const MyMobileCard(
-                      content:
-                          "For 11 years, SKV Group, led by Sri Kalaimagal Trust has maintained a perfect 100% pass rate in 10th-grade exams, earning praise consistently",
-                      icon: Icons.school,
-                      title: "About School",
-                    ),
-                    const SizedBox(height: 16),
-                    const MyMobileCard(
-                      content:
-                          "For 11 years, SKV Group, led by Sri Kalaimagal Trust has maintained a perfect 100% pass rate in 10th-grade exams, earning praise consistently",
-                      icon: Icons.remove_red_eye,
-                      title: "Our Vision",
-                    ),
-                    const SizedBox(height: 16),
-                    const MyMobileCard(
-                      content:
-                          "For 11 years, SKV Group, led by Sri Kalaimagal Trust has maintained a perfect 100% pass rate in 10th-grade exams, earning praise consistently",
-                      icon: Icons.school,
-                      title: "Achievements",
-                    ),
-                    const SizedBox(height: 32),
-                    const MyAdvestisementCard(
-                      content:
-                          "Admissions Open For the Academic Year : 2024-25",
-                    ),
-                    const SizedBox(height: 32),
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        clipBehavior: Clip.none,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 3),
-                        height: 207,
-                        enlargeCenterPage: true,
+                        ],
                       ),
-                      items: imagePaths.map((imagePath) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image.asset(
-                                imagePath,
-                                fit: BoxFit.cover,
-                                width: MediaQuery.of(context).size.width,
-                              ),
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 32),
-                    Text(
-                      "Follow Us On Social Media!",
-                      style: GoogleFonts.outfit(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                MySocialMediaButton(
-                                  image: "lib/images/instaicon.png",
-                                  text: "Instagram",
-                                  onTap: () => _openUrl(
-                                    "https://www.instagram.com/skv_international_school/",
+                      const SizedBox(height: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 4),
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 42, 1, 154),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  "900+",
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                    letterSpacing: 0.5,
                                   ),
                                 ),
-                                const SizedBox(width: 20),
-                                MySocialMediaButton(
-                                  image: "lib/images/instaicon.png",
-                                  text: "Facebook",
-                                  onTap: () =>
-                                      _openUrl("https://facebook.com/yourpage"),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Students Running",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  letterSpacing: 0.5,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            Row(
-                              children: [
-                                MySocialMediaButton(
-                                  image: "lib/images/instaicon.png",
-                                  text: "Youtube",
-                                  onTap: () => _openUrl(
-                                      "https://www.youtube.com/@SKVInternational"),
-                                ),
-                                const SizedBox(width: 20),
-                                MySocialMediaButton(
-                                  image: "lib/images/instaicon.png",
-                                  text: "Whatsapp",
-                                  onTap: () =>
-                                      _openUrl("https://wa.me/9443403775"),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 32),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 2,
-                          width: 160,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: const Color.fromARGB(255, 42, 1, 154),
+                              ),
+                            ],
                           ),
-                          // Customize your line color here
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Every Parent Matters!",
-                          style: GoogleFonts.outfit(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                            letterSpacing: 0.5,
+                          Text(
+                            "Successfully",
+                            style: GoogleFonts.outfit(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              letterSpacing: 0.5,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      "For 11 years, SKV Group, led by Sri Kalaimagal Trust has maintained a perfect 100% pass rate in 10th-grade exams, earning praise consistently",
-                      textAlign: TextAlign.start,
-                      style: GoogleFonts.outfit(
-                        fontSize: 16,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w500,
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    MyImageCardSlider(imagePaths: imagePaths),
-                  ],
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          MyFilledMobileButton(
+                            onTap: () => _openUrl(
+                              "https://skvinstvm.nexterp.in/nlp/nlp/admission-login",
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          MyOutlineMobileButton(
+                            onTap: () => _openUrl(
+                              "https://skvinternationalschool.org/wp-content/uploads/2022/05/4.ADMISSION-POLICY.pdf",
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                      const MyMobileCard(
+                        content:
+                            "SKV Group of Institutions, managed by \nSri Kalaimagal Trust, offers world-class schools, and Montessori feeder schools , holistic education, academic excellence, and future-ready skills for every child.",
+                        icon: Icons.school,
+                        title: "About School",
+                      ),
+                      const SizedBox(height: 16),
+                      const MyMobileCard(
+                        content:
+                            "To empower students with quality education, strong values, and essential skills, fostering a love for learning and innovation. We aim to create confident, responsible individuals who contribute and lead with excellence.",
+                        icon: Icons.remove_red_eye,
+                        title: "Our Vision",
+                      ),
+                      const SizedBox(height: 16),
+                      const MyMobileCard(
+                        content:
+                            "SKV Group of Institutions has set world records and received awards for academic excellence, innovation, and extracurricular success, reflecting our commitment to nurturing future-ready students with a global impact.",
+                        icon: Icons.emoji_events,
+                        title: "Achievements",
+                      ),
+                      const SizedBox(height: 32),
+                      const MyAdvestisementCard(
+                          content:
+                              "Admissions Open For the Academic Year 2025-26 \n(From Pre-Kg to XI th Std)"),
+                      const SizedBox(height: 32),
+                      CarouselSlider(
+                        options: CarouselOptions(
+                          clipBehavior: Clip.none,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 3),
+                          height: 207,
+                          enlargeCenterPage: true,
+                        ),
+                        items: imagePaths.map((imagePath) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.asset(
+                                  imagePath,
+                                  fit: BoxFit.cover,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 32),
+                      Text(
+                        "Follow Us On Social Media!",
+                        style: GoogleFonts.outfit(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  MySocialMediaButton(
+                                    icon: FontAwesomeIcons.instagram,
+                                    color: Colors.pink,
+                                    colorone: Colors.pink,
+                                    text: "Instagram",
+                                    onTap: () => _openUrl(
+                                      "https://www.instagram.com/skv_international_school/",
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  MySocialMediaButton(
+                                    icon: FontAwesomeIcons.facebook,
+                                    color: Colors.blue,
+                                    colorone: Colors.blue,
+                                    text: "Facebook",
+                                    onTap: () => _openUrl(
+                                        "https://www.facebook.com/skvinternationalschool"),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  MySocialMediaButton(
+                                    icon: FontAwesomeIcons.youtube,
+                                    color: Colors.red,
+                                    colorone: Colors.red,
+                                    text: "Youtube",
+                                    onTap: () => _openUrl(
+                                        "https://www.youtube.com/@SKVInternational"),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  MySocialMediaButton(
+                                    icon: FontAwesomeIcons.whatsapp,
+                                    color: Colors.green,
+                                    colorone: Colors.green,
+                                    text: "Whatsapp",
+                                    onTap: () =>
+                                        _openUrl("https://wa.me/9443403775"),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 2,
+                            width: 160,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: const Color.fromARGB(255, 42, 1, 154),
+                            ),
+                            // Customize your line color here
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "Every Parent Matters!",
+                            style: GoogleFonts.outfit(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        "At SKV Group of Institutions, we believe parents are key partners in a childs education. Your involvement, encouragement, and support are vital in fostering academic success and personal growth, helping us create a nurturing environment for every childs future.",
+                        textAlign: TextAlign.start,
+                        style: GoogleFonts.outfit(
+                          fontSize: 16,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      MyImageCardSlider(imagePaths: imagePaths),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const MyBottomWidget(),
-          ],
+              const MyBottomWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -321,14 +344,360 @@ class _HomePageState extends State<HomePage> {
   // Tablet layout
   Widget _buildTabletLayout() {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("SKV International School"),
-      ),
-      body: const Center(
-        child: Text(
-          "Welcome to SKV International School - Tablet Layout",
-          style: TextStyle(fontSize: 20),
-          textAlign: TextAlign.center,
+      body: ScrollConfiguration(
+        behavior: const ScrollBehavior().copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "SKV INTERNATIONAL SCHOOL",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 60,
+                                  color: const Color.fromARGB(255, 42, 1, 154),
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: -2,
+                                  height: 1,
+                                ),
+                              ),
+                              Text(
+                                "Sr Sec (CBSE)",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 40,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: -2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 6),
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 42, 1, 154),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Text(
+                                  "900+",
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 42,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Students Running",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 42,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "Successfully",
+                            style: GoogleFonts.outfit(
+                              fontSize: 42,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          MyFilledButton(
+                            onTap: () => _openUrl(
+                              "https://skvinstvm.nexterp.in/nlp/nlp/admission-login",
+                            ),
+                            text: "Online Admission",
+                          ),
+                          const SizedBox(width: 16),
+                          MyOutlineButton(
+                            onTap: () => _openUrl(
+                              "https://skvinternationalschool.org/wp-content/uploads/2022/05/4.ADMISSION-POLICY.pdf",
+                            ),
+                            text: "Admission Policy",
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          AboutSchoolCard(
+                            title: "About School",
+                            content:
+                                "SKV Group of Institutions, managed by Sri Kalaimagal Trust, offers world-class schools, and Montessori feeder schools in Tiruvannamalai, ensuring holistic education, academic excellence, and future-ready skills for every child.",
+                            icon: Icons.school,
+                          ),
+                          SizedBox(width: 20),
+                          AboutSchoolCard(
+                            title: "Our Vision",
+                            content:
+                                "To empower students with quality education, strong values, and essential skills, fostering a love for learning and innovation. We aim to create confident, responsible individuals who contribute and lead with excellence.",
+                            icon: Icons.visibility,
+                          ),
+                          SizedBox(width: 20),
+                          AboutSchoolCard(
+                            title: "Achievements",
+                            content:
+                                "SKV Group of Institutions has set world records and received numerous awards for academic excellence, innovation, and extracurricular success, reflecting our commitment to nurturing future-ready students with a global impact.",
+                            icon: Icons.emoji_events,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 20,
+                        ),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 6,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          color: const Color.fromARGB(255, 42, 1, 154),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            "Admissions Open For the Academic Year 2025-26 \n(From Pre-Kg to XI th Std)",
+                            style: GoogleFonts.cinzel(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.yellowAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      CarouselSlider(
+                        options: CarouselOptions(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 3),
+                          height: 400,
+                          enlargeCenterPage: true,
+                        ),
+                        items: imagePaths.map((imagePath) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.asset(
+                                  imagePath,
+                                  fit: BoxFit.cover,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 32),
+                      Text(
+                        "Follow Us On Social Media!",
+                        style: GoogleFonts.outfit(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          MyTabletSocialMedia(
+                            onTap: () => _openUrl(
+                              "https://www.instagram.com/skv_international_school/",
+                            ),
+                            text: "Instagram",
+                            icon: FontAwesomeIcons.instagram,
+                            color: Colors.pink,
+                            colorone: Colors.pink,
+                          ),
+                          const SizedBox(width: 20),
+                          MyTabletSocialMedia(
+                            onTap: () => _openUrl(
+                              "https://www.facebook.com/skvinternationalschool",
+                            ),
+                            text: "Facebook",
+                            icon: FontAwesomeIcons.facebook,
+                            color: Colors.blue,
+                            colorone: Colors.blue,
+                          ),
+                          const SizedBox(width: 20),
+                          MyTabletSocialMedia(
+                            onTap: () => _openUrl(
+                              "https://www.youtube.com/@SKVInternational",
+                            ),
+                            text: "Youtube",
+                            icon: FontAwesomeIcons.youtube,
+                            color: Colors.red,
+                            colorone: Colors.red,
+                          ),
+                          const SizedBox(width: 20),
+                          MyTabletSocialMedia(
+                            onTap: () => _openUrl(
+                              "https://wa.me/9443403775",
+                            ),
+                            text: "Whatsapp",
+                            icon: FontAwesomeIcons.whatsapp,
+                            color: Colors.green,
+                            colorone: Colors.green,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 400,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 2,
+                                  width: 160,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color:
+                                        const Color.fromARGB(255, 42, 1, 154),
+                                  ),
+                                  // Customize your line color here
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  "Every Parent Matters!",
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  "At SKV Group of Institutions, we believe parents are key partners in a childs education. Your involvement, encouragement, and support are vital in fostering academic success and personal growth, helping us create a nurturing environment for every childs future.",
+                                  textAlign: TextAlign.start,
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 18,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 60),
+                          Expanded(
+                            child: Stack(
+                              children: [
+                                AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 1000),
+                                  transitionBuilder: (child, animation) {
+                                    return FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    );
+                                  },
+                                  child: ClipRRect(
+                                    key: ValueKey<int>(currentImageIndex),
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Image.asset(
+                                      imagePaths[currentImageIndex],
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 400,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 10,
+                                  top: 180,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.arrow_back_ios,
+                                      size: 32,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        currentImageIndex = (currentImageIndex -
+                                                1 +
+                                                imagePaths.length) %
+                                            imagePaths.length;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 10,
+                                  top: 180,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 32,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        currentImageIndex =
+                                            (currentImageIndex + 1) %
+                                                imagePaths.length;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const MyTabletBottomWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -342,7 +711,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 170.0, vertical: 20),
+                  const EdgeInsets.symmetric(horizontal: 120.0, vertical: 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -359,40 +728,60 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 24),
-                                Text(
-                                  "SKV International School",
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 56,
-                                    color:
-                                        const Color.fromARGB(255, 42, 1, 154),
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "SKV INTERNATIONAL SCHOOL",
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 60,
+                                        color: const Color.fromARGB(
+                                            255, 42, 1, 154),
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: -2,
+                                        height: 1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Text(
-                                  "(CBSE)",
+                                  "Sr Sec (CBSE)",
                                   style: GoogleFonts.outfit(
-                                    fontSize: 32,
+                                    fontSize: 40,
                                     color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: -2,
                                   ),
                                 ),
                                 const SizedBox(height: 20),
                                 RichText(
                                   text: TextSpan(
                                     style: GoogleFonts.outfit(
-                                      fontSize: 44,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: 50,
+                                      fontWeight: FontWeight.w400,
                                       color: Colors.black,
                                     ),
-                                    children: const [
-                                      TextSpan(
-                                        text: "800+",
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 42, 1, 154),
+                                    children: [
+                                      WidgetSpan(
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 6, vertical: 1),
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromARGB(255, 42,
+                                                1, 154), // Background color
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Text(
+                                            "900+",
+                                            style: GoogleFonts.outfit(
+                                              fontSize: 45,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.white, // Text color
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                      TextSpan(
+                                      const TextSpan(
                                         text: " Students Running\nSuccessfully",
                                       ),
                                     ],
@@ -402,13 +791,17 @@ class _HomePageState extends State<HomePage> {
                                 Row(
                                   children: [
                                     MyFilledButton(
-                                      onTap: () {},
+                                      onTap: () => _openUrl(
+                                        "https://skvinstvm.nexterp.in/nlp/nlp/admission-login",
+                                      ),
                                       text: "Online Admission",
                                     ),
                                     const SizedBox(width: 16),
                                     MyOutlineButton(
-                                      onTap: () {},
-                                      text: "Fee Details",
+                                      onTap: () => _openUrl(
+                                        "https://skvinternationalschool.org/wp-content/uploads/2022/05/4.ADMISSION-POLICY.pdf",
+                                      ),
+                                      text: "Admission Policy",
                                     ),
                                   ],
                                 ),
@@ -429,34 +822,30 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const Positioned(
-                        top: 380,
+                        top: 400,
                         left: 0,
                         right: 0,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             AboutSchoolCard(
                               title: "About School",
                               content:
-                                  "For 11 years, SKV Group, led by Sri Kalaimagal Trust "
-                                  "has maintained a perfect 100% pass rate in "
-                                  "10th-grade exams, earning praise consistently.",
+                                  "SKV Group of Institutions, managed by \nSri Kalaimagal Trust, offers world-class schools, and Montessori feeder schools in Tiruvannamalai, ensuring holistic education, academic excellence, and future-ready skills for every child.",
                               icon: Icons.school,
                             ),
+                            SizedBox(width: 20),
                             AboutSchoolCard(
                               title: "Our Vision",
                               content:
-                                  "For 11 years, SKV Group, led by Sri Kalaimagal Trust "
-                                  "has maintained a perfect 100% pass rate in "
-                                  "10th-grade exams, earning praise consistently.",
+                                  "To empower students with quality education, strong values, and essential skills, fostering a love for learning and innovation. We aim to create confident, responsible individuals who contribute and lead with excellence.",
                               icon: Icons.visibility,
                             ),
+                            SizedBox(width: 20),
                             AboutSchoolCard(
                               title: "Achievements",
                               content:
-                                  "For 11 years, SKV Group, led by Sri Kalaimagal Trust "
-                                  "has maintained a perfect 100% pass rate in "
-                                  "10th-grade exams, earning praise consistently.",
+                                  "SKV Group of Institutions has set world records and received numerous awards for academic excellence, innovation, and extracurricular success, reflecting our commitment to nurturing future-ready students with a global impact.",
                               icon: Icons.emoji_events,
                             ),
                           ],
@@ -464,29 +853,32 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 180),
-                  Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 225),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 2,
-                            blurRadius: 6,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                  const SizedBox(height: 220),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 20,
+                    ),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                      color: const Color.fromARGB(255, 42, 1, 154),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
                       child: Text(
-                        "Admissions Open For the Academic Year 2024-25",
-                        style: GoogleFonts.outfit(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                        "Admissions Open For the Academic Year 2025-26 (From Pre-Kg to XI th Std)",
+                        style: GoogleFonts.cinzel(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.yellowAccent,
                         ),
                       ),
                     ),
@@ -497,7 +889,7 @@ class _HomePageState extends State<HomePage> {
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       autoPlay: true,
                       autoPlayInterval: const Duration(seconds: 3),
-                      height: 550,
+                      height: 500,
                       enlargeCenterPage: true,
                     ),
                     items: imagePaths.map((imagePath) {
@@ -515,19 +907,61 @@ class _HomePageState extends State<HomePage> {
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 60),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Connect With Us on Social Media:",
+                        "Follow us on social media!",
                         style: GoogleFonts.outfit(
-                          fontSize: 26,
+                          fontSize: 32,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      const MySocialMedia(),
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          MySocialMedia(
+                            onTap: () => _openUrl(
+                              "https://www.instagram.com/skv_international_school/",
+                            ),
+                            text: "Instagram",
+                            icon: FontAwesomeIcons.instagram,
+                            color: Colors.pink,
+                            colorone: Colors.pink,
+                          ),
+                          const SizedBox(width: 20),
+                          MySocialMedia(
+                            onTap: () => _openUrl(
+                              "https://www.facebook.com/skvinternationalschool",
+                            ),
+                            text: "Facebook",
+                            icon: FontAwesomeIcons.facebook,
+                            color: Colors.blue,
+                            colorone: Colors.blue,
+                          ),
+                          const SizedBox(width: 20),
+                          MySocialMedia(
+                            onTap: () => _openUrl(
+                              "https://www.youtube.com/@SKVInternational",
+                            ),
+                            text: "Youtube",
+                            icon: FontAwesomeIcons.youtube,
+                            color: Colors.red,
+                            colorone: Colors.red,
+                          ),
+                          const SizedBox(width: 20),
+                          MySocialMedia(
+                            onTap: () => _openUrl(
+                              "https://wa.me/9443403775",
+                            ),
+                            text: "Whatsapp",
+                            icon: FontAwesomeIcons.whatsapp,
+                            color: Colors.green,
+                            colorone: Colors.green,
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 80),
                       Row(
                         children: [
@@ -536,8 +970,8 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Container(
                                 width: 220,
-                                height: 4,
-                                color: Colors.red,
+                                height: 3,
+                                color: const Color.fromARGB(255, 42, 1, 154),
                               ),
                               const SizedBox(height: 12),
                               Text(
@@ -547,28 +981,14 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 10),
                               Text(
-                                "For 11 years, SKV Group, led by Sri Kalaimagal Trust\n"
-                                "has maintained a perfect 100% pass rate in \n"
-                                "10th-grade exams, earning praise consistently.",
+                                "At SKV Group of Institutions, we believe parents are \nkey partners in a childs education. Your involvement, \nencouragement, and support are vital in fostering academic \nsuccess and personal growth, helping us create a \nnurturing environment for every childs future.",
                                 style: GoogleFonts.outfit(
                                   fontSize: 18,
                                   color: Colors.black87,
                                   fontWeight: FontWeight.w500,
                                   height: 1.5,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                "Learn More",
-                                style: GoogleFonts.outfit(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: Colors.blue,
-                                  decorationThickness: 2,
                                 ),
                               ),
                             ],
@@ -644,262 +1064,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 10),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 170, vertical: 40),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 28.0),
-                    child: Row(
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              "lib/images/skvlogo.png",
-                              height: 60,
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              "SKV International School",
-                              style: GoogleFonts.outfit(
-                                fontSize: 24,
-                                color: const Color.fromARGB(255, 42, 1, 154),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 40.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Social Media:",
-                              style: GoogleFonts.outfit(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () => _openUrl(
-                                          "https://www.youtube.com/@SKVInternational"),
-                                      child: const Row(
-                                        children: [
-                                          FaIcon(
-                                            FontAwesomeIcons.youtube,
-                                            size: 24,
-                                            color: Colors.red,
-                                          ),
-                                          SizedBox(width: 16),
-                                          Text(
-                                            "YouTube",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    GestureDetector(
-                                      onTap: () => _openUrl(
-                                          "https://facebook.com/yourpage"),
-                                      child: const Row(
-                                        children: [
-                                          FaIcon(
-                                            FontAwesomeIcons.facebook,
-                                            size: 24,
-                                            color: Colors.blue,
-                                          ),
-                                          SizedBox(width: 16),
-                                          Text(
-                                            "Facebook",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    GestureDetector(
-                                      onTap: () => _openUrl(
-                                          "https://www.instagram.com/skv_international_school/"),
-                                      child: const Row(
-                                        children: [
-                                          FaIcon(
-                                            FontAwesomeIcons.instagram,
-                                            size: 24,
-                                            color: Colors.pink,
-                                          ),
-                                          SizedBox(width: 16),
-                                          Text(
-                                            "Instagram",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    GestureDetector(
-                                      onTap: () =>
-                                          _openUrl("https://wa.me/9443403775"),
-                                      child: const Row(
-                                        children: [
-                                          FaIcon(
-                                            FontAwesomeIcons.whatsapp,
-                                            size: 24,
-                                            color: Colors.green,
-                                          ),
-                                          SizedBox(width: 16),
-                                          Text(
-                                            "WhatsApp",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const VerticalDivider(
-                          thickness: 2,
-                          color: Colors.black,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Contact Us:",
-                              style: GoogleFonts.outfit(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Phone Number:   ",
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 16,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      "+91 94434-03775, 97903-77449",
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 18,
-                                        color: Colors.grey.shade800,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Email Id:   ",
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 16,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      "sriganeshskv@gmail.com",
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 18,
-                                        color: Colors.grey.shade800,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Address:",
-                              style: GoogleFonts.outfit(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "SKV International school, \nVettavalam Road, Keeranur Village \nThiruvannamalai - 606755 \nTamil Nadu, India.",
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 18,
-                                        color: Colors.grey.shade800,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const MyDesktopBottomWidget(),
           ],
         ),
       ),

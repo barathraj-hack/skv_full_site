@@ -18,11 +18,11 @@ class MyAdvestisementCard extends StatelessWidget {
       ),
       child: Text(
         content,
-        textAlign: TextAlign.start,
-        style: GoogleFonts.outfit(
+        textAlign: TextAlign.center,
+        style: GoogleFonts.cinzel(
           fontSize: 18,
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
+          color: Colors.yellowAccent,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

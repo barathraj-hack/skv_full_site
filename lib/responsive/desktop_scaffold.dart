@@ -48,14 +48,14 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Padding(
-          padding: const EdgeInsets.all(170.0),
+          padding: const EdgeInsets.all(100.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Logo
               Image.asset(
                 "lib/images/skv.png",
-                height: 156,
+                height: 160,
               ),
               const SizedBox(width: 20),
               // Menu Items

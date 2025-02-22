@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AdminMessage extends StatelessWidget {
+class TabletAdminMessage extends StatelessWidget {
   final String title;
   final String subtitle;
   final String message;
   final imagePath;
 
-  const AdminMessage({
+  const TabletAdminMessage({
     super.key,
     required this.title,
     required this.subtitle,
@@ -42,7 +42,7 @@ class AdminMessage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24),
                 child: Image.asset(
                   imagePath,
-                  height: 300,
+                  height: 250,
                 ),
               ),
               const SizedBox(width: 24),
@@ -54,7 +54,7 @@ class AdminMessage extends StatelessWidget {
                     Text(
                       title,
                       style: GoogleFonts.outfit(
-                        fontSize: 34,
+                        fontSize: 28,
                         fontWeight: FontWeight.w500,
                         color: const Color.fromARGB(255, 42, 1, 154),
                       ),
@@ -71,7 +71,7 @@ class AdminMessage extends StatelessWidget {
                     Text(
                       message,
                       style: GoogleFonts.outfit(
-                        fontSize: 26,
+                        fontSize: 24,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
@@ -81,7 +81,7 @@ class AdminMessage extends StatelessWidget {
                     Text(
                       "SKV GROUP OF INSTITUTIONS",
                       style: GoogleFonts.outfit(
-                        fontSize: 34,
+                        fontSize: 32,
                         fontWeight: FontWeight.w500,
                         color: const Color.fromARGB(255, 42, 1, 154),
                       ),
@@ -100,13 +100,16 @@ class AdminMessage extends StatelessWidget {
           const SizedBox(height: 24),
           Row(
             children: [
-              Text(
-                "Welcome to SKV International School! We are excited to have you join our community. \nOur mission is to provide a nurturing environment where your children can excel academically \nand grow personally. We value your partnership and look forward to working together to \nensure the best education for your child.",
-                style: GoogleFonts.outfit(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 24,
-                  color: Colors.black,
-                  height: 1.5, // Line height for readability
+              SizedBox(
+                width: 740,
+                child: Text(
+                  "Welcome to SKV International School! We are excited to have you join our community. Our mission is to provide a nurturing environment where your children can excel academically and grow personally. We value your partnership and look forward to working together to ensure the best education for your child.",
+                  style: GoogleFonts.outfit(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Colors.black,
+                    height: 1.5, // Line height for readability
+                  ),
                 ),
               ),
               const Spacer(),

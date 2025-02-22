@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:skv_website/desktop_constants/bottom_widget.dart';
+import 'package:skv_website/desktop_constants/bottom_widget/desktop_bottom_widget.dart';
 import 'package:skv_website/desktop_constants/events.dart';
 import 'package:skv_website/desktop_constants/new_event.dart';
 import 'package:skv_website/desktop_constants/news_events.dart';
@@ -8,6 +8,11 @@ import 'package:skv_website/desktop_constants/news_events_new.dart';
 import 'package:skv_website/mobile_constants/bottom_widget.dart';
 import 'package:skv_website/mobile_constants/newsevent_constant/news-1.dart';
 import 'package:skv_website/responsive/responsive_layout.dart';
+import 'package:skv_website/tablet_constants/Tablet_news_one.dart';
+import 'package:skv_website/tablet_constants/tablet_bottom_widget.dart';
+import 'package:skv_website/tablet_constants/tablet_event_one.dart';
+import 'package:skv_website/tablet_constants/tablet_event_two.dart';
+import 'package:skv_website/tablet_constants/tablet_news_two.dart';
 
 class NewsEvents extends StatefulWidget {
   const NewsEvents({super.key});
@@ -29,6 +34,43 @@ class _NewsEventsState extends State<NewsEvents> {
   // Mobile layout
   Widget _buildMobileLayout() {
     return Scaffold(
+      body: ScrollConfiguration(
+        behavior: const ScrollBehavior().copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "News & Events",
+                      style: GoogleFonts.outfit(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const MyNewsOne(),
+                  ],
+                ),
+              ),
+              const MyBottomWidget(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Tablet layout
+  Widget _buildTabletLayout() {
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -39,37 +81,36 @@ class _NewsEventsState extends State<NewsEvents> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "News & Events",
+                    "News",
                     style: GoogleFonts.outfit(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      letterSpacing: 0.5,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w500,
+                      color: const Color.fromARGB(255, 42, 1, 154),
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const MyNewsOne(),
+                  const MyTabletNewsOne(),
+                  const SizedBox(height: 40),
+                  const MyTabletNewsTwo(),
+                  const SizedBox(height: 40),
+                  Text(
+                    "Events",
+                    style: GoogleFonts.outfit(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w500,
+                      color: const Color.fromARGB(255, 42, 1, 154),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  const MyTabletEventOne(),
+                  const SizedBox(height: 40),
+                  const MyTabletEventTwo(),
                 ],
               ),
             ),
-            const MyBottomWidget(),
+            const SizedBox(height: 40),
+            const MyTabletBottomWidget(),
           ],
-        ),
-      ),
-    );
-  }
-
-  // Tablet layout
-  Widget _buildTabletLayout() {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("News & Events"),
-      ),
-      body: const Center(
-        child: Text(
-          "Stay updated with the latest news and events - Tablet Layout",
-          style: TextStyle(fontSize: 20),
-          textAlign: TextAlign.center,
         ),
       ),
     );
@@ -83,7 +124,7 @@ class _NewsEventsState extends State<NewsEvents> {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 40.0, horizontal: 170),
+                  const EdgeInsets.symmetric(vertical: 40.0, horizontal: 120),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -116,7 +157,7 @@ class _NewsEventsState extends State<NewsEvents> {
               ),
             ),
             const SizedBox(height: 40),
-            const BottomWidget(),
+            const MyDesktopBottomWidget(),
           ],
         ),
       ),
