@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,11 +28,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<String> imageUrls = [];
+  int currentNewImageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchFirebaseImages();
+  }
+
+  Future<void> fetchFirebaseImages() async {
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('uploaded_images/'); // or your path
+    final ListResult result = await storageRef.listAll();
+    final urls =
+        await Future.wait(result.items.map((ref) => ref.getDownloadURL()));
+
+    setState(() {
+      imageUrls = urls;
+    });
+  }
+
   // List of image paths
   List<String> imagePaths = [
     "lib/images/skv1.png",
+    "lib/images/skvchamp.png",
+    "lib/images/skvevent.png",
     "lib/images/skv2.png",
-    "lib/images/skv3.png",
+    "lib/images/skvhouse.png",
+    "lib/images/skvtechers.png",
   ];
 
   // Current image index to track which image is shown
@@ -886,21 +912,37 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 60),
                   CarouselSlider(
                     options: CarouselOptions(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      clipBehavior: Clip.none,
                       autoPlay: true,
                       autoPlayInterval: const Duration(seconds: 3),
                       height: 500,
                       enlargeCenterPage: true,
                     ),
-                    items: imagePaths.map((imagePath) {
+                    items: imageUrls.map((imageUrl) {
                       return Builder(
                         builder: (BuildContext context) {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(16),
-                            child: Image.asset(
-                              imagePath,
+                            child: Image.network(
+                              imageUrl,
                               fit: BoxFit.cover,
                               width: MediaQuery.of(context).size.width,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Icon(Icons.broken_image),
                             ),
                           );
                         },

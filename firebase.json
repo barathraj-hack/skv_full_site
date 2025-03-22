@@ -1,0 +1,10 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"skv-admin","appId":"1:1094257976263:android:2ce666f3ceafebdda86fe2","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"skv-admin","configurations":{"android":"1:1094257976263:android:2ce666f3ceafebdda86fe2","ios":"1:1094257976263:ios:85c7d0bab800cd45a86fe2","macos":"1:1094257976263:ios:85c7d0bab800cd45a86fe2","web":"1:1094257976263:web:45adf0e187267223a86fe2","windows":"1:1094257976263:web:dd44f5fb88d795f2a86fe2"}}}}}}
+
+[
+    {
+      "origin": ["*"],
+      "method": ["GET", "HEAD", "OPTIONS"],
+      "responseHeader": ["Content-Type", "x-goog-meta-custom"],
+      "maxAgeSeconds": 3600
+    }
+  ]

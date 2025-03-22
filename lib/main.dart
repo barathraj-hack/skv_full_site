@@ -1,10 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart'; // Import Firebase options
 import 'package:flutter/material.dart';
 import 'package:skv_website/responsive/desktop_scaffold.dart';
 import 'package:skv_website/responsive/mobile_scaffold.dart';
 import 'package:skv_website/responsive/responsive_layout.dart';
 import 'package:skv_website/responsive/tablet_scaffold.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // ✅ Ensures Flutter is initialized
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

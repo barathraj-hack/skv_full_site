@@ -11,9 +11,7 @@ class MyNewsEvents extends StatefulWidget {
 class _NewsEventsState extends State<MyNewsEvents> {
   // List of image paths
   List<String> imagePaths = [
-    "lib/images/skv1.png",
-    "lib/images/skv2.png",
-    "lib/images/skv3.png",
+    "lib/images/skvnews.jpg",
   ];
 
   List<String> imagePathsNew = [
@@ -41,7 +39,7 @@ class _NewsEventsState extends State<MyNewsEvents> {
             children: [
               Container(
                 width: double.infinity,
-                height: 400,
+                height: 700,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -62,7 +60,7 @@ class _NewsEventsState extends State<MyNewsEvents> {
                           imagePaths[currentImageIndex],
                           fit: BoxFit.cover,
                           width: double.infinity,
-                          height: 400,
+                          height: 700,
                         ),
                       ),
                     ),
@@ -106,7 +104,6 @@ class _NewsEventsState extends State<MyNewsEvents> {
               ),
               const SizedBox(height: 12),
               Container(
-                height: 180,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.transparent,
@@ -119,7 +116,7 @@ class _NewsEventsState extends State<MyNewsEvents> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Nov Month 2024:",
+                      "Exicing News On March-2024:",
                       style: GoogleFonts.outfit(
                         fontSize: 24,
                         color: Colors.black,
@@ -128,7 +125,7 @@ class _NewsEventsState extends State<MyNewsEvents> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      "Library day, Children's day,Diwali Contribution etc….",
+                      "SKV School student Riyas from Thiruvannamalai set a record by holding a plank for one hour in an inter-district Silambam competition. He was appreciated by the education officer and recommended for a state-level award.",
                       style: GoogleFonts.outfit(
                         fontSize: 20,
                         color: Colors.grey.shade700,
@@ -144,7 +141,7 @@ class _NewsEventsState extends State<MyNewsEvents> {
         const SizedBox(width: 40),
         // Second Image with Arrows
         Flexible(
-          flex: 2,
+          flex: 1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
