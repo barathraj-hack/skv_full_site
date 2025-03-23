@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,21 +12,104 @@ class MyNewsEvents extends StatefulWidget {
 
 class _NewsEventsState extends State<MyNewsEvents> {
   // List of image paths
-  List<String> imagePaths = [
-    "lib/images/skvnews.jpg",
-  ];
+  List<String> imageUrls = []; // From 'uploaded_images_three/'
+  int currentImageIndexOne = 0;
 
-  List<String> imagePathsNew = [
-    "lib/images/skv1.png",
-    "lib/images/skv2.png",
-    "lib/images/skv3.png",
-  ];
-
-  // Current image index to track which image is shown
+  List<String> imageUrl = []; // From 'uploaded_images_four/'
   int currentImageIndex = 0;
 
-  // Current image index to track which image is shown
-  int currentImageIndexNew = 0;
+  String newsOneTitle = "";
+  String newsOneDesc = "";
+
+  String newsTwoTitle = "";
+  String newsTwoDesc = "";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchFirebaseImagesThree(); // Load folder 3
+    fetchFirebaseImagesFour(); // Load folder 4
+    fetchNewsText();
+    fetchNewsOneText();
+  }
+
+  Future<void> fetchFirebaseImagesThree() async {
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('uploaded_images_three/'); // Folder 3
+    final ListResult result = await storageRef.listAll();
+    final urls =
+        await Future.wait(result.items.map((ref) => ref.getDownloadURL()));
+
+    setState(() {
+      imageUrls = urls; // Store in imageUrls (folder 3)
+    });
+  }
+
+  Future<void> fetchFirebaseImagesFour() async {
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('uploaded_images_four/'); // Folder 4
+    final ListResult result = await storageRef.listAll();
+    final urls =
+        await Future.wait(result.items.map((ref) => ref.getDownloadURL()));
+
+    setState(() {
+      imageUrl = urls; // Store in imageUrl (folder 4)
+    });
+  }
+
+  Future<void> fetchNewsText() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('uploaded_texts')
+          .orderBy('timestamp',
+              descending: true) // make sure your docs have timestamp
+          .limit(1) // get only the latest
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final data = snapshot.docs.first.data();
+
+        setState(() {
+          newsOneTitle = data['title'] ?? 'No title';
+          newsOneDesc = data['description'] ?? 'No description';
+        });
+
+        print("✅ News loaded: $newsOneTitle");
+      } else {
+        print("⚠️ No documents found in 'uploaded_texts'");
+      }
+    } catch (e) {
+      print("❌ Error fetching news text: $e");
+    }
+  }
+
+  Future<void> fetchNewsOneText() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('uploaded_texts_one')
+          .orderBy('timestamp',
+              descending: true) // make sure your docs have timestamp
+          .limit(1) // get only the latest
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final data = snapshot.docs.first.data();
+
+        setState(() {
+          newsTwoTitle = data['title'] ?? 'No title';
+          newsTwoDesc = data['description'] ?? 'No description';
+        });
+
+        print("✅ News loaded: $newsTwoTitle");
+      } else {
+        print("⚠️ No documents found in 'uploaded_texts_one'");
+      }
+    } catch (e) {
+      print("❌ Error fetching news text: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +124,7 @@ class _NewsEventsState extends State<MyNewsEvents> {
             children: [
               Container(
                 width: double.infinity,
-                height: 700,
+                height: 400,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -54,13 +139,33 @@ class _NewsEventsState extends State<MyNewsEvents> {
                         );
                       },
                       child: ClipRRect(
-                        key: ValueKey<int>(currentImageIndex),
+                        key: ValueKey<int>(currentImageIndexOne),
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          imagePaths[currentImageIndex],
+                        child: Image.network(
+                          imageUrls[
+                              currentImageIndexOne], // <- Firebase image URL
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: 700,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return SizedBox(
+                              height: 700,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Center(
+                            child: Text("Failed to load image"),
+                          ),
                         ),
                       ),
                     ),
@@ -75,9 +180,9 @@ class _NewsEventsState extends State<MyNewsEvents> {
                         ),
                         onPressed: () {
                           setState(() {
-                            currentImageIndex =
-                                (currentImageIndex - 1 + imagePaths.length) %
-                                    imagePaths.length;
+                            currentImageIndexOne =
+                                (currentImageIndexOne - 1 + imageUrls.length) %
+                                    imageUrls.length;
                           });
                         },
                       ),
@@ -93,8 +198,8 @@ class _NewsEventsState extends State<MyNewsEvents> {
                         ),
                         onPressed: () {
                           setState(() {
-                            currentImageIndex =
-                                (currentImageIndex + 1) % imagePaths.length;
+                            currentImageIndexOne =
+                                (currentImageIndexOne + 1) % imageUrls.length;
                           });
                         },
                       ),
@@ -116,7 +221,9 @@ class _NewsEventsState extends State<MyNewsEvents> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Exicing News On March-2024:",
+                      newsOneTitle.isNotEmpty
+                          ? newsOneTitle
+                          : 'Loading title...', // ✅ Handle loading state
                       style: GoogleFonts.outfit(
                         fontSize: 24,
                         color: Colors.black,
@@ -125,7 +232,9 @@ class _NewsEventsState extends State<MyNewsEvents> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      "SKV School student Riyas from Thiruvannamalai set a record by holding a plank for one hour in an inter-district Silambam competition. He was appreciated by the education officer and recommended for a state-level award.",
+                      newsOneDesc.isNotEmpty
+                          ? newsOneDesc
+                          : 'Loading description...', // ✅ Handle loading state
                       style: GoogleFonts.outfit(
                         fontSize: 20,
                         color: Colors.grey.shade700,
@@ -162,13 +271,32 @@ class _NewsEventsState extends State<MyNewsEvents> {
                         );
                       },
                       child: ClipRRect(
-                        key: ValueKey<int>(currentImageIndexNew),
+                        key: ValueKey<int>(currentImageIndex),
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          imagePathsNew[currentImageIndexNew],
+                        child: Image.network(
+                          imageUrl[currentImageIndex], // <- Firebase image URL
                           fit: BoxFit.cover,
                           width: double.infinity,
-                          height: 400,
+                          height: 700,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return SizedBox(
+                              height: 700,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Center(
+                            child: Text("Failed to load image"),
+                          ),
                         ),
                       ),
                     ),
@@ -183,10 +311,9 @@ class _NewsEventsState extends State<MyNewsEvents> {
                         ),
                         onPressed: () {
                           setState(() {
-                            currentImageIndexNew = (currentImageIndexNew -
-                                    1 +
-                                    imagePathsNew.length) %
-                                imagePathsNew.length;
+                            currentImageIndex =
+                                (currentImageIndex - 1 + imageUrl.length) %
+                                    imageUrl.length;
                           });
                         },
                       ),
@@ -202,8 +329,8 @@ class _NewsEventsState extends State<MyNewsEvents> {
                         ),
                         onPressed: () {
                           setState(() {
-                            currentImageIndexNew = (currentImageIndexNew + 1) %
-                                imagePathsNew.length;
+                            currentImageIndex =
+                                (currentImageIndex + 1) % imageUrl.length;
                           });
                         },
                       ),
@@ -213,8 +340,6 @@ class _NewsEventsState extends State<MyNewsEvents> {
               ),
               const SizedBox(height: 12),
               Container(
-                width: double.infinity,
-                height: 180,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.transparent,
@@ -227,7 +352,9 @@ class _NewsEventsState extends State<MyNewsEvents> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Nov Month 2024:",
+                      newsTwoTitle.isNotEmpty
+                          ? newsTwoTitle
+                          : 'Loading title...', // ✅ Handle loading state
                       style: GoogleFonts.outfit(
                         fontSize: 24,
                         color: Colors.black,
@@ -236,7 +363,9 @@ class _NewsEventsState extends State<MyNewsEvents> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      "Library day, Children's day,Diwali Contribution etc….",
+                      newsTwoDesc.isNotEmpty
+                          ? newsTwoDesc
+                          : 'Loading description...', // ✅ Handle loading state
                       style: GoogleFonts.outfit(
                         fontSize: 20,
                         color: Colors.grey.shade700,

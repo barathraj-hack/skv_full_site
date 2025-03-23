@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyAdvestisementCard extends StatelessWidget {
+class MyAdvertisementCard extends StatelessWidget {
   final String content;
-  const MyAdvestisementCard({
+
+  const MyAdvertisementCard({
     super.key,
     required this.content,
   });

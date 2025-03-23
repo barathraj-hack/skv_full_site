@@ -3,14 +3,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyNewsEventsNew extends StatefulWidget {
-  const MyNewsEventsNew({super.key});
+class MyEventTwoMobile extends StatefulWidget {
+  const MyEventTwoMobile({super.key});
 
   @override
-  State<MyNewsEventsNew> createState() => _NewsEventsState();
+  State<MyEventTwoMobile> createState() => _MyEventTwoMobileState();
 }
 
-class _NewsEventsState extends State<MyNewsEventsNew> {
+class _MyEventTwoMobileState extends State<MyEventTwoMobile> {
   // List of image paths
   List<String> imageUrls = []; // From 'uploaded_images_three/'
   int currentImageIndexOne = 0;
@@ -18,25 +18,25 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
   List<String> imageUrl = []; // From 'uploaded_images_four/'
   int currentImageIndex = 0;
 
-  String newsThreeTitle = "";
-  String newsThreeDesc = "";
+  String newsOneTitle = "";
+  String newsOneDesc = "";
 
-  String newsFourTitle = "";
-  String newsFourDesc = "";
+  String newsTwoTitle = "";
+  String newsTwoDesc = "";
 
   @override
   void initState() {
     super.initState();
-    fetchFirebaseImagesFive(); // Load folder 3
-    fetchFirebaseImagesSix(); // Load folder 4
-    fetchNewsTwoText();
-    fetchNewsThreeText();
+    fetchFirebaseImagesThree(); // Load folder 3
+    fetchFirebaseImagesFour(); // Load folder 4
+    fetchNewsText();
+    fetchNewsOneText();
   }
 
-  Future<void> fetchFirebaseImagesFive() async {
+  Future<void> fetchFirebaseImagesThree() async {
     final storageRef = FirebaseStorage.instance
         .ref()
-        .child('uploaded_images_five/'); // Folder 5
+        .child('uploaded_images_nine/'); // Folder 3
     final ListResult result = await storageRef.listAll();
     final urls =
         await Future.wait(result.items.map((ref) => ref.getDownloadURL()));
@@ -46,10 +46,10 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
     });
   }
 
-  Future<void> fetchFirebaseImagesSix() async {
+  Future<void> fetchFirebaseImagesFour() async {
     final storageRef = FirebaseStorage.instance
         .ref()
-        .child('uploaded_images_six/'); // Folder 6
+        .child('uploaded_images_ten/'); // Folder 4
     final ListResult result = await storageRef.listAll();
     final urls =
         await Future.wait(result.items.map((ref) => ref.getDownloadURL()));
@@ -59,10 +59,10 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
     });
   }
 
-  Future<void> fetchNewsTwoText() async {
+  Future<void> fetchNewsText() async {
     try {
       final snapshot = await FirebaseFirestore.instance
-          .collection('uploaded_texts_two')
+          .collection('uploaded_image_six')
           .orderBy('timestamp',
               descending: true) // make sure your docs have timestamp
           .limit(1) // get only the latest
@@ -72,23 +72,23 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
         final data = snapshot.docs.first.data();
 
         setState(() {
-          newsThreeTitle = data['title'] ?? 'No title';
-          newsThreeDesc = data['description'] ?? 'No description';
+          newsOneTitle = data['title'] ?? 'No title';
+          newsOneDesc = data['description'] ?? 'No description';
         });
 
-        print("✅ News loaded: $newsThreeTitle");
+        print("✅ News loaded: $newsOneTitle");
       } else {
-        print("⚠️ No documents found in 'uploaded_texts_two'");
+        print("⚠️ No documents found in 'uploaded_image_six'");
       }
     } catch (e) {
       print("❌ Error fetching news text: $e");
     }
   }
 
-  Future<void> fetchNewsThreeText() async {
+  Future<void> fetchNewsOneText() async {
     try {
       final snapshot = await FirebaseFirestore.instance
-          .collection('uploaded_texts_three')
+          .collection('uploaded_image_seven')
           .orderBy('timestamp',
               descending: true) // make sure your docs have timestamp
           .limit(1) // get only the latest
@@ -98,13 +98,13 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
         final data = snapshot.docs.first.data();
 
         setState(() {
-          newsFourTitle = data['title'] ?? 'No title';
-          newsFourDesc = data['description'] ?? 'No description';
+          newsTwoTitle = data['title'] ?? 'No title';
+          newsTwoDesc = data['description'] ?? 'No description';
         });
 
-        print("✅ News loaded: $newsFourTitle");
+        print("✅ News loaded: $newsTwoTitle");
       } else {
-        print("⚠️ No documents found in 'uploaded_texts_three'");
+        print("⚠️ No documents found in 'uploaded_image_seven'");
       }
     } catch (e) {
       print("❌ Error fetching news text: $e");
@@ -113,18 +113,17 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // First Image with Arrows
-        Flexible(
-          flex: 1,
-          child: Column(
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // First Image Section
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: double.infinity,
-                height: 400,
+                height: 250,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -142,8 +141,7 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                         key: ValueKey<int>(currentImageIndexOne),
                         borderRadius: BorderRadius.circular(16),
                         child: Image.network(
-                          imageUrls[
-                              currentImageIndexOne], // <- Firebase image URL
+                          imageUrls[currentImageIndexOne],
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: 700,
@@ -163,21 +161,16 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                             );
                           },
                           errorBuilder: (context, error, stackTrace) =>
-                              const Center(
-                            child: Text("Failed to load image"),
-                          ),
+                              const Center(child: Text("Failed to load image")),
                         ),
                       ),
                     ),
                     Positioned(
                       left: 10,
-                      top: 180,
+                      top: 100,
                       child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          size: 32,
-                          color: Colors.white,
-                        ),
+                        icon: const Icon(Icons.arrow_back_ios,
+                            size: 32, color: Colors.white),
                         onPressed: () {
                           setState(() {
                             currentImageIndexOne =
@@ -189,13 +182,10 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                     ),
                     Positioned(
                       right: 10,
-                      top: 180,
+                      top: 100,
                       child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 32,
-                          color: Colors.white,
-                        ),
+                        icon: const Icon(Icons.arrow_forward_ios,
+                            size: 32, color: Colors.white),
                         onPressed: () {
                           setState(() {
                             currentImageIndexOne =
@@ -213,17 +203,15 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.grey.shade300,
-                  ),
+                  border: Border.all(color: Colors.grey.shade300),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      newsThreeTitle.isNotEmpty
-                          ? newsThreeTitle
-                          : 'Loading title...', // ✅ Handle loading state
+                      newsOneTitle.isNotEmpty
+                          ? newsOneTitle
+                          : 'Loading title...',
                       style: GoogleFonts.outfit(
                         fontSize: 24,
                         color: Colors.black,
@@ -232,9 +220,9 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      newsThreeDesc.isNotEmpty
-                          ? newsThreeDesc
-                          : 'Loading description...', // ✅ Handle loading state
+                      newsOneDesc.isNotEmpty
+                          ? newsOneDesc
+                          : 'Loading description...',
                       style: GoogleFonts.outfit(
                         fontSize: 20,
                         color: Colors.grey.shade700,
@@ -246,17 +234,16 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
               ),
             ],
           ),
-        ),
-        const SizedBox(width: 40),
-        // Second Image with Arrows
-        Flexible(
-          flex: 1,
-          child: Column(
+
+          const SizedBox(height: 40),
+
+          // Second Image Section
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: double.infinity,
-                height: 400,
+                height: 250,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -274,7 +261,7 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                         key: ValueKey<int>(currentImageIndex),
                         borderRadius: BorderRadius.circular(16),
                         child: Image.network(
-                          imageUrl[currentImageIndex], // <- Firebase image URL
+                          imageUrl[currentImageIndex],
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: 700,
@@ -294,21 +281,16 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                             );
                           },
                           errorBuilder: (context, error, stackTrace) =>
-                              const Center(
-                            child: Text("Failed to load image"),
-                          ),
+                              const Center(child: Text("Failed to load image")),
                         ),
                       ),
                     ),
                     Positioned(
                       left: 10,
-                      top: 180,
+                      top: 100,
                       child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          size: 32,
-                          color: Colors.white,
-                        ),
+                        icon: const Icon(Icons.arrow_back_ios,
+                            size: 32, color: Colors.white),
                         onPressed: () {
                           setState(() {
                             currentImageIndex =
@@ -320,13 +302,10 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                     ),
                     Positioned(
                       right: 10,
-                      top: 180,
+                      top: 100,
                       child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 32,
-                          color: Colors.white,
-                        ),
+                        icon: const Icon(Icons.arrow_forward_ios,
+                            size: 32, color: Colors.white),
                         onPressed: () {
                           setState(() {
                             currentImageIndex =
@@ -344,17 +323,15 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.grey.shade300,
-                  ),
+                  border: Border.all(color: Colors.grey.shade300),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      newsFourTitle.isNotEmpty
-                          ? newsFourTitle
-                          : 'Loading title...', // ✅ Handle loading state
+                      newsTwoTitle.isNotEmpty
+                          ? newsTwoTitle
+                          : 'Loading title...',
                       style: GoogleFonts.outfit(
                         fontSize: 24,
                         color: Colors.black,
@@ -363,9 +340,9 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      newsFourDesc.isNotEmpty
-                          ? newsFourDesc
-                          : 'Loading description...', // ✅ Handle loading state
+                      newsTwoDesc.isNotEmpty
+                          ? newsTwoDesc
+                          : 'Loading description...',
                       style: GoogleFonts.outfit(
                         fontSize: 20,
                         color: Colors.grey.shade700,
@@ -377,8 +354,8 @@ class _NewsEventsState extends State<MyNewsEventsNew> {
               ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

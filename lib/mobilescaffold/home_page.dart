@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,7 +12,6 @@ import 'package:skv_website/desktop_constants/outline_button.dart';
 import 'package:skv_website/mobile_constants/advestisement_card.dart';
 import 'package:skv_website/mobile_constants/bottom_widget.dart';
 import 'package:skv_website/mobile_constants/filled_button.dart';
-import 'package:skv_website/mobile_constants/image_card_slider.dart';
 import 'package:skv_website/mobile_constants/my_card.dart';
 import 'package:skv_website/mobile_constants/outline_button.dart';
 import 'package:skv_website/mobile_constants/social_media.dart';
@@ -28,19 +28,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> imageUrls = [];
+  List<String> imageUrls = []; // From 'uploaded_images/'
   int currentNewImageIndex = 0;
+
+  List<String> imageUrl = []; // From 'uploaded_images_two/'
+  int currentImageIndex = 0;
+
+  String myMessage = "";
 
   @override
   void initState() {
     super.initState();
-    fetchFirebaseImages();
+    fetchFirebaseImages(); // Load first set
+    fetchFirebaseImagesTwo(); // Load second set
+    fetchFirebaseMessage();
   }
 
   Future<void> fetchFirebaseImages() async {
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child('uploaded_images/'); // or your path
+    final storageRef =
+        FirebaseStorage.instance.ref().child('uploaded_images/'); // Folder 1
     final ListResult result = await storageRef.listAll();
     final urls =
         await Future.wait(result.items.map((ref) => ref.getDownloadURL()));
@@ -50,20 +56,45 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // List of image paths
-  List<String> imagePaths = [
-    "lib/images/skv1.png",
-    "lib/images/skvchamp.png",
-    "lib/images/skvevent.png",
-    "lib/images/skv2.png",
-    "lib/images/skvhouse.png",
-    "lib/images/skvtechers.png",
-  ];
+  Future<void> fetchFirebaseImagesTwo() async {
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('uploaded_images_two/'); // Folder 2
+    final ListResult result = await storageRef.listAll();
+    final urls =
+        await Future.wait(result.items.map((ref) => ref.getDownloadURL()));
 
-  // Current image index to track which image is shown
-  int currentImageIndex = 0;
+    setState(() {
+      imageUrl = urls;
+    });
+  }
 
-  // Function to open URLs
+  Future<void> fetchFirebaseMessage() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('uploaded_messages_five')
+          .orderBy('timestamp',
+              descending: true) // make sure your docs have timestamp
+          .limit(1) // get only the latest
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final data = snapshot.docs.first.data();
+
+        setState(() {
+          myMessage = data['message'] ?? 'No title';
+        });
+
+        print("✅ News loaded: $myMessage");
+      } else {
+        print("⚠️ No documents found in 'uploaded_messages_five'");
+      }
+    } catch (e) {
+      print("❌ Error fetching news text: $e");
+    }
+  }
+
+// Optional: Function to open URL
   Future<void> _openUrl(String url) async {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -227,9 +258,7 @@ class _HomePageState extends State<HomePage> {
                         title: "Achievements",
                       ),
                       const SizedBox(height: 32),
-                      const MyAdvestisementCard(
-                          content:
-                              "Admissions Open For the Academic Year 2025-26 \n(From Pre-Kg to XI th Std)"),
+                      MyAdvertisementCard(content: myMessage),
                       const SizedBox(height: 32),
                       CarouselSlider(
                         options: CarouselOptions(
@@ -239,15 +268,33 @@ class _HomePageState extends State<HomePage> {
                           height: 207,
                           enlargeCenterPage: true,
                         ),
-                        items: imagePaths.map((imagePath) {
+                        items: imageUrls.map((imageUrl) {
                           return Builder(
                             builder: (BuildContext context) {
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  imagePath,
+                                child: Image.network(
+                                  imageUrl,
                                   fit: BoxFit.cover,
                                   width: MediaQuery.of(context).size.width,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      const Icon(Icons.broken_image),
                                 ),
                               );
                             },
@@ -354,7 +401,81 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      MyImageCardSlider(imagePaths: imagePaths),
+                      Stack(
+                        children: [
+                          AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 1000),
+                            transitionBuilder: (child, animation) {
+                              return FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              );
+                            },
+                            child: ClipRRect(
+                              key: ValueKey<int>(currentImageIndex),
+                              borderRadius: BorderRadius.circular(16),
+                              child: imageUrl.isNotEmpty
+                                  ? Image.network(
+                                      imageUrl[
+                                          currentImageIndex], // ✅ fixed here
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 250,
+                                    )
+                                  : Container(
+                                      width: double.infinity,
+                                      height: 400,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                      child: const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                            ),
+                          ),
+                          if (imageUrl.length > 1)
+                            Positioned(
+                              left: 10,
+                              top: 100,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_back_ios,
+                                  size: 32,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    currentImageIndex = (currentImageIndex -
+                                            1 +
+                                            imageUrl.length) %
+                                        imageUrl.length;
+                                  });
+                                },
+                              ),
+                            ),
+                          if (imageUrl.length > 1)
+                            Positioned(
+                              right: 10,
+                              top: 100,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 32,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    currentImageIndex =
+                                        (currentImageIndex + 1) %
+                                            imageUrl.length;
+                                  });
+                                },
+                              ),
+                            ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -524,7 +645,7 @@ class _HomePageState extends State<HomePage> {
                         child: Center(
                           child: Text(
                             textAlign: TextAlign.center,
-                            "Admissions Open For the Academic Year 2025-26 \n(From Pre-Kg to XI th Std)",
+                            myMessage,
                             style: GoogleFonts.cinzel(
                               fontSize: 28,
                               fontWeight: FontWeight.w500,
@@ -536,21 +657,39 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 32),
                       CarouselSlider(
                         options: CarouselOptions(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          clipBehavior: Clip.none,
                           autoPlay: true,
                           autoPlayInterval: const Duration(seconds: 3),
-                          height: 400,
+                          height: 450,
                           enlargeCenterPage: true,
                         ),
-                        items: imagePaths.map((imagePath) {
+                        items: imageUrls.map((imageUrl) {
                           return Builder(
                             builder: (BuildContext context) {
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  imagePath,
+                                child: Image.network(
+                                  imageUrl,
                                   fit: BoxFit.cover,
                                   width: MediaQuery.of(context).size.width,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      const Icon(Icons.broken_image),
                                 ),
                               );
                             },
@@ -667,51 +806,69 @@ class _HomePageState extends State<HomePage> {
                                   child: ClipRRect(
                                     key: ValueKey<int>(currentImageIndex),
                                     borderRadius: BorderRadius.circular(16),
-                                    child: Image.asset(
-                                      imagePaths[currentImageIndex],
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                      height: 400,
-                                    ),
+                                    child: imageUrl.isNotEmpty
+                                        ? Image.network(
+                                            imageUrl[
+                                                currentImageIndex], // ✅ fixed here
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                            height: 400,
+                                          )
+                                        : Container(
+                                            width: double.infinity,
+                                            height: 400,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            child: const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          ),
                                   ),
                                 ),
-                                Positioned(
-                                  left: 10,
-                                  top: 180,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.arrow_back_ios,
-                                      size: 32,
-                                      color: Colors.white,
+                                if (imageUrl.length > 1)
+                                  Positioned(
+                                    left: 10,
+                                    top: 180,
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.arrow_back_ios,
+                                        size: 32,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          currentImageIndex =
+                                              (currentImageIndex -
+                                                      1 +
+                                                      imageUrl.length) %
+                                                  imageUrl.length;
+                                        });
+                                      },
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        currentImageIndex = (currentImageIndex -
-                                                1 +
-                                                imagePaths.length) %
-                                            imagePaths.length;
-                                      });
-                                    },
                                   ),
-                                ),
-                                Positioned(
-                                  right: 10,
-                                  top: 180,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 32,
-                                      color: Colors.white,
+                                if (imageUrl.length > 1)
+                                  Positioned(
+                                    right: 10,
+                                    top: 180,
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 32,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          currentImageIndex =
+                                              (currentImageIndex + 1) %
+                                                  imageUrl.length;
+                                        });
+                                      },
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        currentImageIndex =
-                                            (currentImageIndex + 1) %
-                                                imagePaths.length;
-                                      });
-                                    },
                                   ),
-                                ),
                               ],
                             ),
                           ),
@@ -900,7 +1057,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Center(
                       child: Text(
-                        "Admissions Open For the Academic Year 2025-26 (From Pre-Kg to XI th Std)",
+                        textAlign: TextAlign.center,
+                        myMessage,
                         style: GoogleFonts.cinzel(
                           fontSize: 28,
                           fontWeight: FontWeight.w500,
@@ -1050,51 +1208,69 @@ class _HomePageState extends State<HomePage> {
                                   child: ClipRRect(
                                     key: ValueKey<int>(currentImageIndex),
                                     borderRadius: BorderRadius.circular(16),
-                                    child: Image.asset(
-                                      imagePaths[currentImageIndex],
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                      height: 400,
-                                    ),
+                                    child: imageUrl.isNotEmpty
+                                        ? Image.network(
+                                            imageUrl[
+                                                currentImageIndex], // ✅ fixed here
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                            height: 400,
+                                          )
+                                        : Container(
+                                            width: double.infinity,
+                                            height: 400,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            child: const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          ),
                                   ),
                                 ),
-                                Positioned(
-                                  left: 10,
-                                  top: 180,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.arrow_back_ios,
-                                      size: 32,
-                                      color: Colors.white,
+                                if (imageUrl.length > 1)
+                                  Positioned(
+                                    left: 10,
+                                    top: 180,
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.arrow_back_ios,
+                                        size: 32,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          currentImageIndex =
+                                              (currentImageIndex -
+                                                      1 +
+                                                      imageUrl.length) %
+                                                  imageUrl.length;
+                                        });
+                                      },
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        currentImageIndex = (currentImageIndex -
-                                                1 +
-                                                imagePaths.length) %
-                                            imagePaths.length;
-                                      });
-                                    },
                                   ),
-                                ),
-                                Positioned(
-                                  right: 10,
-                                  top: 180,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 32,
-                                      color: Colors.white,
+                                if (imageUrl.length > 1)
+                                  Positioned(
+                                    right: 10,
+                                    top: 180,
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 32,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          currentImageIndex =
+                                              (currentImageIndex + 1) %
+                                                  imageUrl.length;
+                                        });
+                                      },
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        currentImageIndex =
-                                            (currentImageIndex + 1) %
-                                                imagePaths.length;
-                                      });
-                                    },
                                   ),
-                                ),
                               ],
                             ),
                           ),

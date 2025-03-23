@@ -6,13 +6,12 @@ import 'package:skv_website/desktop_constants/new_event.dart';
 import 'package:skv_website/desktop_constants/news_events.dart';
 import 'package:skv_website/desktop_constants/news_events_new.dart';
 import 'package:skv_website/mobile_constants/bottom_widget.dart';
-import 'package:skv_website/mobile_constants/newsevent_constant/news-1.dart';
+import 'package:skv_website/mobile_constants/newsevent_constant/event_one.dart';
+import 'package:skv_website/mobile_constants/newsevent_constant/event_two.dart';
+import 'package:skv_website/mobile_constants/newsevent_constant/news_one.dart';
+import 'package:skv_website/mobile_constants/newsevent_constant/news_two.dart';
 import 'package:skv_website/responsive/responsive_layout.dart';
-import 'package:skv_website/tablet_constants/Tablet_news_one.dart';
 import 'package:skv_website/tablet_constants/tablet_bottom_widget.dart';
-import 'package:skv_website/tablet_constants/tablet_event_one.dart';
-import 'package:skv_website/tablet_constants/tablet_event_two.dart';
-import 'package:skv_website/tablet_constants/tablet_news_two.dart';
 
 class NewsEvents extends StatefulWidget {
   const NewsEvents({super.key});
@@ -47,16 +46,32 @@ class _NewsEventsState extends State<NewsEvents> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "News & Events",
+                      "News",
                       style: GoogleFonts.outfit(
-                        fontSize: 20,
+                        fontSize: 24,
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
                         letterSpacing: 0.5,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const MyNewsOne(),
+                    const MyNewsOneMobile(),
+                    const SizedBox(height: 20),
+                    const MyNewsTwoMobile(),
+                    const SizedBox(height: 20),
+                    Text(
+                      "Events",
+                      style: GoogleFonts.outfit(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const MyEventOneMobile(),
+                    const SizedBox(height: 20),
+                    const MyEventTwoMobile(),
                   ],
                 ),
               ),
@@ -89,9 +104,9 @@ class _NewsEventsState extends State<NewsEvents> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const MyTabletNewsOne(),
+                  const MyNewsEvents(),
                   const SizedBox(height: 40),
-                  const MyTabletNewsTwo(),
+                  const MyNewsEventsNew(),
                   const SizedBox(height: 40),
                   Text(
                     "Events",
@@ -101,10 +116,10 @@ class _NewsEventsState extends State<NewsEvents> {
                       color: const Color.fromARGB(255, 42, 1, 154),
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  const MyEvents(),
                   const SizedBox(height: 40),
-                  const MyTabletEventOne(),
-                  const SizedBox(height: 40),
-                  const MyTabletEventTwo(),
+                  const MyNewEvent(),
                 ],
               ),
             ),
