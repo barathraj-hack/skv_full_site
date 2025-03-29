@@ -45,8 +45,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchFirebaseImages() async {
-    final storageRef =
-        FirebaseStorage.instance.ref().child('uploaded_images/'); // Folder 1
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('uploaded_images_new/'); // Folder 1
     final ListResult result = await storageRef.listAll();
     final urls =
         await Future.wait(result.items.map((ref) => ref.getDownloadURL()));
