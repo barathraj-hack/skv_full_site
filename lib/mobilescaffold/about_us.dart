@@ -148,7 +148,26 @@ class _AboutUsState extends State<AboutUs> {
                       text2: "  M.B.A.,",
                       text3: "FOUNDER | CORRESPONDENT ",
                       message:
-                          "Welcome to SKV International School! We are thrilled to have you join us and look forward to providing a nurturing environment where your child can excel and grow.",
+                          "Education is a shared journey of growth and purpose. Students are encouraged to dream big and work hard. Teachers inspire with wisdom and care. Parents strengthen our mission through trust and support.Together, we shape a brighter future.",
+                    ),
+                    const SizedBox(height: 32),
+                    Text(
+                      "Senior Principal's Message",
+                      style: GoogleFonts.outfit(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const MyMessageBox(
+                      image: "lib/images/senior.jpg",
+                      text1: "Sri Jyothi.V ",
+                      text2: "M.A., B.Ed., M.Phil.,",
+                      text3: "SENIOR PRINCIPAL",
+                      message:
+                          "We strive to create a learning environment that nurtures discipline, creativity, and excellence. Our focus is on holistic development—shaping character as well as intellect. With committed staff, eager learners, and supportive families, we continue to uphold strong values and academic excellence.",
                     ),
                     const SizedBox(height: 32),
                     Text(
@@ -167,7 +186,7 @@ class _AboutUsState extends State<AboutUs> {
                       text2: "  M.A., M.Phil, B.Ed",
                       text3: "PRINCIPAL ",
                       message:
-                          "Welcome to SKV International School! As your principal, I look forward to collaborating with you and our staff to foster a nurturing and inspiring environment.",
+                          "At our school, we are dedicated to nurturing well-rounded individuals through a balance of academic excellence and strong values. With the support of our committed staff and families, we create an environment where students grow in character, confidence, and capability.",
                     ),
                     const SizedBox(height: 32),
                     Text(
@@ -312,6 +331,27 @@ class _AboutUsState extends State<AboutUs> {
                     subtitle: "M.B.A.,",
                     message: "FOUNDER | CORRESPONDENT",
                     imagePath: "lib/images/ttggkk.png",
+                    story:
+                        "Education is a shared journey of growth and purpose. Students are encouraged to dream big and work hard. Teachers inspire with wisdom and care. Parents strengthen our mission through trust and support.Together, we shape a brighter future.",
+                  ),
+                  const SizedBox(height: 32),
+                  Text(
+                    "Senior Principal's Message",
+                    style: GoogleFonts.outfit(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: const Color.fromARGB(255, 42, 1, 154),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+
+                  const TabletAdminMessage(
+                    title: "Sri Jyothi .V",
+                    subtitle: "M.A., B.Ed., M.Phil.,",
+                    message: "SENIOR PRINCIPAL",
+                    imagePath: "lib/images/senior.jpg",
+                    story:
+                        "We strive to create a learning environment that nurtures discipline, creativity, and excellence. Our focus is on holistic development—shaping character as well as intellect. With committed staff, eager learners, and supportive families, we continue to uphold strong values and academic excellence.",
                   ),
 
                   const SizedBox(height: 40),
@@ -329,6 +369,8 @@ class _AboutUsState extends State<AboutUs> {
                     subtitle: "M.A., M.Phil, B.Ed",
                     message: "PRINCIPAL",
                     imagePath: "lib/images/pricepal.jpg",
+                    story:
+                        "At our school, we are dedicated to nurturing well-rounded individuals through a balance of academic excellence and strong values. With the support of our committed staff and families, we create an environment where students grow in character, confidence, and capability.",
                   ),
 
                   const SizedBox(height: 60),
@@ -529,6 +571,27 @@ class _AboutUsState extends State<AboutUs> {
                     subtitle: "M.B.A.,",
                     message: "FOUNDER | CORRESPONDENT",
                     imagePath: "lib/images/ttggkk.png",
+                    story:
+                        "Education is a shared journey of growth and purpose. Students are encouraged to dream big \nand work hard. Teachers inspire with wisdom and care. Parents strengthen our mission through \ntrust and support.Together, we shape a brighter future.",
+                  ),
+
+                  const SizedBox(height: 60),
+                  Text(
+                    "Senior Principal's Message",
+                    style: GoogleFonts.outfit(
+                      fontSize: 34,
+                      fontWeight: FontWeight.w600,
+                      color: const Color.fromARGB(255, 42, 1, 154),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  const AdminMessage(
+                    title: "Sri Jyothi .V",
+                    subtitle: "M.A., B.Ed., M.Phil.,",
+                    message: "SENIOR PRINCIPAL",
+                    imagePath: "lib/images/senior.jpg",
+                    story:
+                        "We strive to create a learning environment that nurtures discipline, creativity, and excellence. \nOur focus is on holistic development—shaping character as well as intellect. With committed staff, \neager learners, and supportive families, we continue to uphold strong values and academic excellence.",
                   ),
 
                   const SizedBox(height: 60),
@@ -546,6 +609,8 @@ class _AboutUsState extends State<AboutUs> {
                     subtitle: "M.A., M.Phil, B.Ed",
                     message: "PRINCIPAL",
                     imagePath: "lib/images/pricepal.jpg",
+                    story:
+                        "At our school, we are dedicated to nurturing well-rounded individuals through a balance of academic \nexcellence and strong values. With the support of our committed staff and families, we create an \nenvironment where students grow in character, confidence, and capability.",
                   ),
 
                   const SizedBox(height: 60),

@@ -5,6 +5,7 @@ class TabletAdminMessage extends StatelessWidget {
   final String title;
   final String subtitle;
   final String message;
+  final String story;
   final imagePath;
 
   const TabletAdminMessage({
@@ -13,6 +14,7 @@ class TabletAdminMessage extends StatelessWidget {
     required this.subtitle,
     required this.message,
     required this.imagePath,
+    required this.story,
   });
 
   @override
@@ -103,7 +105,7 @@ class TabletAdminMessage extends StatelessWidget {
               SizedBox(
                 width: 740,
                 child: Text(
-                  "Welcome to SKV International School! We are excited to have you join our community. Our mission is to provide a nurturing environment where your children can excel academically and grow personally. We value your partnership and look forward to working together to ensure the best education for your child.",
+                  story,
                   style: GoogleFonts.outfit(
                     fontWeight: FontWeight.w400,
                     fontSize: 20,

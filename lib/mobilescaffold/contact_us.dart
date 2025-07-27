@@ -89,7 +89,7 @@ class _ContactUsState extends State<ContactUs> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              "(CBSE)",
+                              "Sr Sec (CBSE)",
                               style: GoogleFonts.outfit(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -277,7 +277,7 @@ class _ContactUsState extends State<ContactUs> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        "INTERNATIONAL SCHOOL Hr.Sec (CBSE)",
+                        "INTERNATIONAL SCHOOL Sr.Sec (CBSE)",
                         style: GoogleFonts.outfit(
                           fontSize: 34,
                           fontWeight: FontWeight.w500,
@@ -458,7 +458,7 @@ class _ContactUsState extends State<ContactUs> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        "INTERNATIONAL SCHOOL Hr.Sec (CBSE)",
+                        "INTERNATIONAL SCHOOL Sr.Sec (CBSE)",
                         style: GoogleFonts.outfit(
                           fontSize: 34,
                           fontWeight: FontWeight.w500,

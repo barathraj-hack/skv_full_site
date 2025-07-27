@@ -5,6 +5,7 @@ class AdminMessage extends StatelessWidget {
   final String title;
   final String subtitle;
   final String message;
+  final String story;
   final imagePath;
 
   const AdminMessage({
@@ -13,6 +14,7 @@ class AdminMessage extends StatelessWidget {
     required this.subtitle,
     required this.message,
     required this.imagePath,
+    required this.story,
   });
 
   @override
@@ -101,7 +103,7 @@ class AdminMessage extends StatelessWidget {
           Row(
             children: [
               Text(
-                "Welcome to SKV International School! We are excited to have you join our community. \nOur mission is to provide a nurturing environment where your children can excel academically \nand grow personally. We value your partnership and look forward to working together to \nensure the best education for your child.",
+                story,
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.w400,
                   fontSize: 24,

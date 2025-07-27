@@ -946,27 +946,37 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     children: [
                                       WidgetSpan(
+                                        alignment:
+                                            PlaceholderAlignment.baseline,
+                                        baseline: TextBaseline.alphabetic,
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 6, vertical: 1),
+                                              horizontal: 10, vertical: 10),
                                           decoration: BoxDecoration(
-                                            color: const Color.fromARGB(255, 42,
-                                                1, 154), // Background color
+                                            color: const Color.fromARGB(
+                                                255, 42, 1, 154),
                                             borderRadius:
                                                 BorderRadius.circular(15),
                                           ),
                                           child: Text(
                                             "900+",
                                             style: GoogleFonts.outfit(
-                                              fontSize: 45,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.white, // Text color
+                                              fontSize: 42,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                              height:
+                                                  1, // Ensures better vertical alignment
                                             ),
                                           ),
                                         ),
                                       ),
-                                      const TextSpan(
+                                      TextSpan(
                                         text: " Students Running\nSuccessfully",
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 50,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ],
                                   ),
